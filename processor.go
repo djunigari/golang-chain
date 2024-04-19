@@ -20,9 +20,9 @@ func (p *Processor[T]) Run(extra *T) {
 	}
 
 	for _, action := range *p.Actions {
-		if action.IgnoreError {
-			ctx.LastActionCalled = &action
-			action.Function(ctx)
+		if action.ActionOptions.IgnoreError {
+			ctx.LastActionCalled = action
+			(*action.ActionFunc)(ctx)
 		}
 	}
 }
