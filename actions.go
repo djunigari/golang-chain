@@ -5,7 +5,6 @@ type ActionFunc[T any] func(ctx *Context[T])
 type Actions[T any] []*Action[T]
 
 type Action[T any] struct {
-	Name          string
 	ActionFunc    *ActionFunc[T]
 	ActionOptions *ActionOptions
 }
@@ -16,7 +15,6 @@ type ActionOptions struct {
 
 func NewAction[T any](name string) *Action[T] {
 	return &Action[T]{
-		Name:          name,
 		ActionFunc:    nil,
 		ActionOptions: nil,
 	}
