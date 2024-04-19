@@ -2,8 +2,6 @@ package chain
 
 import (
 	"fmt"
-	"reflect"
-	"runtime"
 )
 
 type Processor[T any] struct {
@@ -29,8 +27,7 @@ func (p *Processor[T]) Run(extra *T) {
 
 	for _, action := range *p.Actions {
 		if p.PrintLog {
-			funcName := runtime.FuncForPC(reflect.ValueOf(action.ActionFunc).Pointer()).Name()
-			fmt.Println(funcName)
+			fmt.Println(action.Name)
 		}
 
 		if ctx.err == nil || (action.ActionOptions != nil && action.ActionOptions.IgnoreError) {
