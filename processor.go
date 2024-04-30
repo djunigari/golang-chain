@@ -25,12 +25,30 @@ func (p *Processor[T]) Run(extra *T) {
 		},
 	}
 
-	for _, action := range *p.Actions {
+	p.execActions(ctx, p.Actions)
+}
+
+func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
+	for _, action := range *actions {
 		if p.PrintLog {
 			fmt.Println(action.Name)
 		}
 
-		if ctx.err == nil || (action.ActionOptions != nil && action.ActionOptions.IgnoreError) {
+		if ctx.err != nil || (action.ActionOptions != nil && !action.ActionOptions.IgnoreError) {
+			continue
+		}
+
+		switch {
+		case action.ActionType == SingleAction:
+			ctx.LastActionCalled = action
+			(*action.ActionFunc)(ctx)
+		case action.ActionType == FlowAction:
+			ctx.LastActionCalled = action
+			(*action.ActionFunc)(ctx)
+			if subs, ok := action.SubActions[action.FlowDirection]; ok {
+				p.execActions(ctx, &subs)
+			}
+		default:
 			ctx.LastActionCalled = action
 			(*action.ActionFunc)(ctx)
 		}
