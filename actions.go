@@ -26,13 +26,12 @@ func NewAction[T any](name string) *Action[T] {
 		ActionFunc:        nil,
 		ActionIgnoreError: false,
 		ActionType:        SingleAction,
-		FlowDirection:     "none",
 		SubActions:        nil,
 	}
 }
 
-func (a *Action[T]) Function(function *ActionFunc[T]) *Action[T] {
-	a.ActionFunc = function
+func (a *Action[T]) Function(function ActionFunc[T]) *Action[T] {
+	a.ActionFunc = &function
 	return a
 }
 

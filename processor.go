@@ -18,8 +18,9 @@ func New[T any](actions *Actions[T], printLog bool) *Processor[T] {
 
 func (p *Processor[T]) Run(extra *T) {
 	ctx := &Context[T]{
-		err:        nil,
-		Additional: make(map[string]interface{}),
+		err:                 nil,
+		Additional:          make(map[string]interface{}),
+		ActionFlowDirection: nil,
 		ExtraContext: ExtraContext[T]{
 			Extra: *extra,
 		},
@@ -45,7 +46,10 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 		case action.ActionType == FlowAction:
 			ctx.LastActionCalled = action
 			(*action.ActionFunc)(ctx)
-			if subs, ok := action.SubActions[action.FlowDirection]; ok {
+			if ctx.ActionFlowDirection == nil {
+				continue
+			}
+			if subs, ok := action.SubActions[*ctx.ActionFlowDirection]; ok {
 				p.execActions(ctx, &subs)
 			}
 		default:
