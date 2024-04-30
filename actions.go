@@ -12,26 +12,22 @@ const (
 )
 
 type Action[T any] struct {
-	Name          string
-	ActionFunc    *ActionFunc[T]
-	ActionOptions *ActionOptions
-	ActionType    ActionType
-	FlowDirection string
-	SubActions    map[string]Actions[T]
-}
-
-type ActionOptions struct {
-	IgnoreError bool
+	Name              string
+	ActionFunc        *ActionFunc[T]
+	ActionIgnoreError bool
+	ActionType        ActionType
+	FlowDirection     string
+	SubActions        map[string]Actions[T]
 }
 
 func NewAction[T any](name string) *Action[T] {
 	return &Action[T]{
-		Name:          name,
-		ActionFunc:    nil,
-		ActionOptions: &ActionOptions{IgnoreError: false},
-		ActionType:    SingleAction,
-		FlowDirection: "none",
-		SubActions:    nil,
+		Name:              name,
+		ActionFunc:        nil,
+		ActionIgnoreError: false,
+		ActionType:        SingleAction,
+		FlowDirection:     "none",
+		SubActions:        nil,
 	}
 }
 
@@ -40,8 +36,8 @@ func (a *Action[T]) Function(function *ActionFunc[T]) *Action[T] {
 	return a
 }
 
-func (a *Action[T]) Options(options *ActionOptions) *Action[T] {
-	a.ActionOptions = options
+func (a *Action[T]) IgnoreError(ignoreError bool) *Action[T] {
+	a.ActionIgnoreError = ignoreError
 	return a
 }
 

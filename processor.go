@@ -34,7 +34,7 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 			fmt.Println(action.Name)
 		}
 
-		if ctx.err != nil || (action.ActionOptions != nil && !action.ActionOptions.IgnoreError) {
+		if ctx.err != nil && !action.ActionIgnoreError {
 			continue
 		}
 
