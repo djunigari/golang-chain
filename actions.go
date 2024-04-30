@@ -45,7 +45,7 @@ func (a *Action[T]) Type(actionType ActionType) *Action[T] {
 	return a
 }
 
-func (a *Action[T]) AddSubActions(condition string, actions ...*Action[T]) *Action[T] {
+func (a *Action[T]) Flow(condition string, actions ...*Action[T]) *Action[T] {
 	if a.SubActions == nil {
 		a.SubActions = make(map[string]Actions[T])
 	}
