@@ -20,7 +20,7 @@ func (p *Processor[T]) Run(extra *T) {
 	ctx := &Context[T]{
 		err:                 nil,
 		Additional:          make(map[string]interface{}),
-		ActionFlowDirection: nil,
+		ActionFlowDirection: "",
 		ExtraContext: ExtraContext[T]{
 			Extra: *extra,
 		},
