@@ -46,10 +46,10 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 		case action.ActionType == FlowAction:
 			ctx.LastActionCalled = action
 			(*action.ActionFunc)(ctx)
-			if ctx.ActionFlowDirection == nil {
+			if ctx.ActionFlowDirection == "" {
 				continue
 			}
-			if subs, ok := action.SubActions[*ctx.ActionFlowDirection]; ok {
+			if subs, ok := action.SubActions[ctx.ActionFlowDirection]; ok {
 				p.execActions(ctx, &subs)
 			}
 		default:

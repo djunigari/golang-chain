@@ -6,7 +6,7 @@ type Context[T any] struct {
 	ActionErr           *Action[T]
 	LastActionCalled    *Action[T]
 	Additional          map[string]interface{}
-	ActionFlowDirection *string
+	ActionFlowDirection string
 }
 
 func (c *Context[T]) SetErr(err error) {
