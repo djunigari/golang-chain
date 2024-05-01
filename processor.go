@@ -29,23 +29,25 @@ func (p *Processor[T]) Run(extra *T) {
 	p.execActions(ctx, p.Actions)
 }
 
+func (p *Processor[T]) execAction(ctx *Context[T], action *Action[T]) {
+	if p.PrintLog {
+		fmt.Println(action.Name)
+	}
+	ctx.LastActionCalled = action
+	(*action.ActionFunc)(ctx)
+}
+
 func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 	for _, action := range *actions {
-		if p.PrintLog {
-			fmt.Println(action.Name)
-		}
-
 		if ctx.err != nil && !action.ActionIgnoreError {
 			continue
 		}
 
 		switch {
 		case action.ActionType == SingleAction:
-			ctx.LastActionCalled = action
-			(*action.ActionFunc)(ctx)
+			p.execAction(ctx, action)
 		case action.ActionType == FlowAction:
-			ctx.LastActionCalled = action
-			(*action.ActionFunc)(ctx)
+			p.execAction(ctx, action)
 			if ctx.ActionFlowDirection == "" {
 				continue
 			}
@@ -53,8 +55,7 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 				p.execActions(ctx, &subs)
 			}
 		default:
-			ctx.LastActionCalled = action
-			(*action.ActionFunc)(ctx)
+			p.execAction(ctx, action)
 		}
 	}
 }
