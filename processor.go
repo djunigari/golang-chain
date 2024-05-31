@@ -65,6 +65,9 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 				if subs, ok := action.SubActions[action.Name]; ok {
 					p.execActions(ctx, &subs)
 				}
+				if ctx.err != nil && !action.ActionIgnoreError {
+					ctx.LoopAction[action.Name] = false
+				}
 			}
 			if p.PrintLog {
 				fmt.Println("end loop :", action.Name)
