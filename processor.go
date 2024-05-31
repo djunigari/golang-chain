@@ -60,7 +60,6 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 			if p.PrintLog {
 				fmt.Println("starting loop :", action.Name)
 			}
-			ctx.LoopAction[action.Name] = true
 			for ctx.LoopAction[action.Name] {
 				if subs, ok := action.SubActions[action.Name]; ok {
 					p.execActions(ctx, &subs)
