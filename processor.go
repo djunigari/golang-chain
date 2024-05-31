@@ -66,7 +66,8 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 					p.execActions(ctx, &subs)
 				}
 				if ctx.err != nil && !action.ActionIgnoreError {
-					ctx.LoopAction[action.Name] = false
+					delete(ctx.LoopAction, action.Name)
+					break
 				}
 			}
 			if p.PrintLog {
