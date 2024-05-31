@@ -24,6 +24,7 @@ func (p *Processor[T]) Run(extra *T) {
 		ExtraContext: ExtraContext[T]{
 			Extra: *extra,
 		},
+		LoopAction: make(map[string]bool),
 	}
 
 	p.execActions(ctx, p.Actions)
@@ -53,6 +54,20 @@ func (p *Processor[T]) execActions(ctx *Context[T], actions *Actions[T]) {
 			}
 			if subs, ok := action.SubActions[ctx.ActionFlowDirection]; ok {
 				p.execActions(ctx, &subs)
+			}
+		case action.ActionType == LoopAction:
+			p.execAction(ctx, action)
+			if p.PrintLog {
+				fmt.Println("starting loop :", action.Name)
+			}
+			ctx.LoopAction[action.Name] = true
+			for ctx.LoopAction[action.Name] {
+				if subs, ok := action.SubActions[action.Name]; ok {
+					p.execActions(ctx, &subs)
+				}
+			}
+			if p.PrintLog {
+				fmt.Println("end loop :", action.Name)
 			}
 		default:
 			p.execAction(ctx, action)

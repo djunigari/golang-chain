@@ -9,6 +9,7 @@ type ActionType string
 const (
 	SingleAction ActionType = "SingleAction"
 	FlowAction   ActionType = "FlowAction"
+	LoopAction   ActionType = "LoopAction"
 )
 
 type Action[T any] struct {
@@ -42,6 +43,14 @@ func (a *Action[T]) IgnoreError(ignoreError bool) *Action[T] {
 
 func (a *Action[T]) Type(actionType ActionType) *Action[T] {
 	a.ActionType = actionType
+	return a
+}
+
+func (a *Action[T]) Loop(actions ...*Action[T]) *Action[T] {
+	if a.SubActions == nil {
+		a.SubActions = make(map[string]Actions[T])
+	}
+	a.SubActions[a.Name] = actions
 	return a
 }
 

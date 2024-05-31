@@ -6,6 +6,7 @@ type Context[T any] struct {
 	ActionErr           *Action[T]
 	LastActionCalled    *Action[T]
 	Additional          map[string]interface{}
+	LoopAction          map[string]bool
 	ActionFlowDirection string
 }
 
