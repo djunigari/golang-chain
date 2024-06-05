@@ -25,3 +25,7 @@ func (c *Context[T]) SetErrMsg(msg string) *Context[T] {
 func (c *Context[T]) Err() error {
 	return c.err
 }
+
+func (c *Context[T]) ErrMsg() string {
+	return c.errMsg
+}

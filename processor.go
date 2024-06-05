@@ -19,6 +19,7 @@ func New[T any](actions *Actions[T], printLog bool) *Processor[T] {
 func (p *Processor[T]) Run(extra *T) {
 	ctx := &Context[T]{
 		err:                 nil,
+		errMsg:              "",
 		Additional:          make(map[string]interface{}),
 		ActionFlowDirection: "",
 		ExtraContext: ExtraContext[T]{
