@@ -2,18 +2,37 @@ package chain
 
 import (
 	"fmt"
+
+	logger "github.com/djunigari/golang-logger"
 )
 
 type Processor[T any] struct {
+	Name     string
 	Actions  *Actions[T]
 	PrintLog bool
 }
 
-func New[T any](actions *Actions[T], printLog bool) *Processor[T] {
+func New[T any](name string, actions *Actions[T], printLog bool) *Processor[T] {
 	return &Processor[T]{
+		Name:     name,
 		Actions:  actions,
 		PrintLog: printLog,
 	}
+}
+
+func (p *Processor[T]) LogError(ctx *Context[T]) {
+	if ctx.Err() == nil {
+		return
+	}
+
+	var errorDetails string
+	if ctx.ActionErr != nil {
+		errorDetails = fmt.Sprintf("[%s] %s : %s", ctx.ActionErr.Name, ctx.Err(), ctx.ErrMsg())
+	} else {
+		errorDetails = fmt.Sprintf("%s : %s", ctx.Err(), ctx.ErrMsg())
+	}
+	logger.LogError("failed "+p.Name, errorDetails)
+
 }
 
 func (p *Processor[T]) Run(extra *T) {
@@ -29,6 +48,7 @@ func (p *Processor[T]) Run(extra *T) {
 	}
 
 	p.execActions(ctx, p.Actions)
+	p.LogError(ctx)
 }
 
 func (p *Processor[T]) execAction(ctx *Context[T], action *Action[T]) {

@@ -26,7 +26,7 @@ func main() {
 	actions := chain.Actions[MyExtraContext]{action1, action2}
 
 	// Crie um Processor com as ações e habilite o log
-	processor := chain.New(&actions, true)
+	processor := chain.New("simple_example_test", &actions, true)
 
 	// Execute o processor com o contexto extra
 	extraContext := MyExtraContext{

@@ -89,7 +89,7 @@ func main() {
 	actions := chain.Actions[MyExtraContext]{createListAction, printListAction}
 
 	// Crie um Processor com as ações e habilite o log
-	processor := chain.New(&actions, false)
+	processor := chain.New("loop_example_test", &actions, false)
 
 	// Execute o processor com o contexto extra
 	extraContext := MyExtraContext{
