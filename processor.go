@@ -20,6 +20,22 @@ func New[T any](name string, actions *Actions[T], printLog bool) *Processor[T] {
 	}
 }
 
+func (p *Processor[T]) AddActions(actions *Actions[T]) {
+	if p.Actions != nil {
+		*p.Actions = append(*p.Actions, *actions...)
+		return
+	}
+	p.Actions = actions
+}
+
+func (p *Processor[T]) AddAction(action *Action[T]) {
+	if p.Actions != nil {
+		*p.Actions = append(*p.Actions, action)
+		return
+	}
+	p.Actions = &Actions[T]{action}
+}
+
 func (p *Processor[T]) LogError(ctx *Context[T]) {
 	if ctx.Err() == nil {
 		return
@@ -32,7 +48,6 @@ func (p *Processor[T]) LogError(ctx *Context[T]) {
 		errorDetails = fmt.Sprintf("%s : %s", ctx.Err(), ctx.ErrMsg())
 	}
 	logger.LogError("failed "+p.Name, errorDetails)
-
 }
 
 func (p *Processor[T]) Run(extra *T) {
