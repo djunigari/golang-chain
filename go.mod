@@ -2,7 +2,7 @@ module github.com/djunigari/golang-chain
 
 go 1.22.1
 
-require github.com/djunigari/golang-logger v0.0.1
+require github.com/djunigari/golang-logger v1.0.22
 
 require (
 	github.com/fatih/color v1.16.0 // indirect

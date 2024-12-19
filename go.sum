@@ -1,5 +1,11 @@
 github.com/djunigari/golang-logger v0.0.1 h1:dvIdqDsZCFC3+zEmMKtn5l6xwKcmcGUJOM06fZijoIs=
 github.com/djunigari/golang-logger v0.0.1/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
+github.com/djunigari/golang-logger v0.0.2 h1:E3vxrM1U5X0f7HgWbOmREWj35Wg9j3NwVgGHiq73E3A=
+github.com/djunigari/golang-logger v0.0.2/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
+github.com/djunigari/golang-logger v0.0.3 h1:im0cES4fCTl8j/0Z4NiO6BPb1E5SQ2povDzf3pd3hY4=
+github.com/djunigari/golang-logger v0.0.3/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
+github.com/djunigari/golang-logger v1.0.22 h1:kE3eec57lTAlFBONC7OZNsDHOwmDkzjU3Ow8tjNLObQ=
+github.com/djunigari/golang-logger v1.0.22/go.mod h1:yCdDLVzlUutx+ewqTH33lCjkzWLnzTS2T3MpyiKLSY0=
 github.com/fatih/color v1.16.0 h1:zmkK9Ngbjj+K0yRhTVONQh1p/HknKYSlNT+vZCzyokM=
 github.com/fatih/color v1.16.0/go.mod h1:fL2Sau1YI5c0pdGEVCbKQbLXB6edEj1ZgiY4NijnWvE=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
