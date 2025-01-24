@@ -11,6 +11,8 @@ var (
 	ErrVariableNotFound    = errors.New("variable not found in context")
 	ErrInvalidVariableType = errors.New("invalid type of variable")
 	ErrInvalidVariable     = errors.New("invalid variable")
+	ErrKeyAlreadyExists    = errors.New("key already exists in context")
+	ErrAttributeNotFound   = errors.New("attribute not found")
 )
 
 func LogError[T any](parentName string) *Action[T] {

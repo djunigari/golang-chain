@@ -29,3 +29,23 @@ func (c *Context[T]) Err() error {
 func (c *Context[T]) ErrMsg() string {
 	return c.errMsg
 }
+
+func (c *Context[T]) RenameAdditionalKey(oldKey, newKey string) error {
+	// Verifica se a chave antiga existe
+	if _, exists := c.Additional[oldKey]; !exists {
+		return ErrAttributeNotFound
+	}
+
+	// Se a nova chave já existir, retorna um erro
+	if _, exists := c.Additional[newKey]; exists {
+		return ErrKeyAlreadyExists
+	}
+
+	// Atribui o valor da chave antiga à nova chave
+	c.Additional[newKey] = c.Additional[oldKey]
+
+	// Remove a chave antiga
+	delete(c.Additional, oldKey)
+
+	return nil
+}
